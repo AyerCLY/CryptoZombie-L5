@@ -10,7 +10,15 @@ import "./zombieattack.sol";
 import"./erc721.sol";
 
 import "./safemath.sol";
+/*
+@title and @author are straightforward.
+@notice explains to a user what the contract / function does. @dev is for explaining extra details to developers.
+@param and @return are for describing what each parameter and return value of a function are for.
+*/
 
+///@title A contract that manages transfering zombie ownership
+///@author AyerCLY
+///@dev Compliant with OpenZeppelin's implementation of the ERC721 spec draft
 
 //Declare a new contract, ZombieOwnership, that inherits from ZombieAttack. Leave the body of the contract empty for now.
 //Luckily in Solidity, your contract can inherit from multiple contracts 
