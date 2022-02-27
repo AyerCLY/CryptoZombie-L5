@@ -9,6 +9,9 @@ import "./zombieattack.sol";
 // Import file here
 import"./erc721.sol";
 
+import "./safemath.sol";
+
+
 //Declare a new contract, ZombieOwnership, that inherits from ZombieAttack. Leave the body of the contract empty for now.
 //Luckily in Solidity, your contract can inherit from multiple contracts 
 // Declare ERC721 inheritance here
@@ -31,9 +34,11 @@ contract ZombieOwnership is ZombieAttack, ERC721 {
   // Define _transfer() here
   function _transfer(address _from, address _to, uint256 _tokenId) private {
     // increment ownerZombieCount for the person receiving the zombie (address _to). Use ++ to increment.
-    ownerZombieCount[_to]++;
-    //decrease the ownerZombieCount for the person sending the zombie (address _from). Use -- to decrement.
-    ownerZombieCount[_from]--;
+    // 1. Replace with SafeMath's `add`
+    ownerZombieCount[_to] = ownerZombieCount[_to].add(1);
+        //decrease the ownerZombieCount for the person sending the zombie (address _from). Use -- to decrement.
+        // 2. Replace with SafeMath's `sub`
+    ownerZombieCount[_from] = ownerZombieCount[_from].sub(1);
     //change zombieToOwner mapping for this _tokenId so it now points to _to.
     zombieToOwner[_tokenId] =  _to;
     //The ERC721 spec includes a Transfer event. The last line of this function should fire Transfer with the correct information — check erc721.sol to see what arguments it's expecting to be called with and implement it here.
