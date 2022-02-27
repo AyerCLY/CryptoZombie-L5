@@ -22,6 +22,19 @@ contract ZombieOwnership is ZombieAttack, ERC721 {
     // 2. Return the owner of `_tokenId` here
     return zombieToOwner[_tokenId];
   }
+  
+  
+  // Define _transfer() here
+  function _transfer(address _from, address _to, uint256 _tokenId) private {
+    // increment ownerZombieCount for the person receiving the zombie (address _to). Use ++ to increment.
+    ownerZombieCount[_to]++;
+    //decrease the ownerZombieCount for the person sending the zombie (address _from). Use -- to decrement.
+    ownerZombieCount[_from]--;
+    //change zombieToOwner mapping for this _tokenId so it now points to _to.
+    zombieToOwner[_tokenId] =  _to;
+    //The ERC721 spec includes a Transfer event. The last line of this function should fire Transfer with the correct information — check erc721.sol to see what arguments it's expecting to be called with and implement it here.
+    emit Transfer (_from, _to, _tokenId);
+  }
 
   function transferFrom(address _from, address _to, uint256 _tokenId) external payable {
 
