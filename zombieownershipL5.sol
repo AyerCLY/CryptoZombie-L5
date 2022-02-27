@@ -13,6 +13,10 @@ import"./erc721.sol";
 //Luckily in Solidity, your contract can inherit from multiple contracts 
 // Declare ERC721 inheritance here
 contract ZombieOwnership is ZombieAttack, ERC721 {
+  
+  // 1. Define mapping here
+  mapping (uint => address) zombieApprovals;
+  
   function balanceOf(address _owner) external view returns (uint256) {
     // 1. Return the number of zombies `_owner` has here
     return ownerZombieCount[_owner];
@@ -37,11 +41,17 @@ contract ZombieOwnership is ZombieAttack, ERC721 {
   }
 
   function transferFrom(address _from, address _to, uint256 _tokenId) external payable {
-
+    // 2. Add the require statement here
+    require (zombieToOwner[_tokenId] ==msg.sender || zombieApprovals[_tokenId] == msg.sender);
+    // 3. Call _transfer
+    _transfer(_from, _to, _tokenId);
   }
-
-  function approve(address _approved, uint256 _tokenId) external payable {
-
+  
+  // 1. Add function modifier here
+  function approve(address _approved, uint256 _tokenId) external payable onlyOwnerOf(_tokenId) {
+    // 2. Define function here
+    zombieApprovals[_tokenId] = _approved;
+    //Fire the Approval event here,, and be sure to use msg.sender as _owner.
+    emit Approval(msg.sender, _approved, _tokenId);
   }
-
 }
