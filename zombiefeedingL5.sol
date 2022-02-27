@@ -21,7 +21,7 @@ contract ZombieFeeding is ZombieFactory {
 
   KittyInterface kittyContract;
 
-  // 1. Change modifier name to `onlyOwnerOf` to avoid ERC721 "ownerOf" function 
+  // 1. Change modifier name to `onlyOwnerOf` to avoid ERC721 "ownerOf" function in "zombieownershipL5.sol"
   modifier onlyOwnerOf(uint _zombieId) {
     require(msg.sender == zombieToOwner[_zombieId]);
     _;
