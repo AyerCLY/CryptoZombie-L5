@@ -23,6 +23,8 @@ library SafeMath {
       return 0;
     }
     uint256 c = a * b;
+    //assert is similar to require, where it will throw an error if false. The difference between assert and require is that require will refund the user the rest of their gas when a function fails, 
+    //whereas assert will not. So most of the time you want to use require in your code; assert is typically used when something has gone horribly wrong with the code (like a uint overflow).
     assert(c / a == b);
     return c;
   }
